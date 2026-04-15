@@ -1,144 +1,45 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Knowledge Base</title>
-  <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; font-family: Arial, sans-serif; }
-    body { display: flex; height: 100vh; background: #f5f6fa; }
-
-    /* Sidebar */
-    .sidebar {
-      width: 250px;
-      background: #1e1e2f;
-      color: white;
-      padding: 20px;
-    }
-    .sidebar h2 { margin-bottom: 20px; }
-    .sidebar ul { list-style: none; }
-    .sidebar li { padding: 10px 0; cursor: pointer; }
-    .sidebar li:hover { color: #00adb5; }
-
-    /* Main */
-    .main {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-    }
-
-    /* Search */
-    .search-bar {
-      padding: 15px;
-      background: white;
-      border-bottom: 1px solid #ddd;
-    }
-    .search-bar input {
-      width: 100%;
-      padding: 10px;
-      border-radius: 8px;
-      border: 1px solid #ccc;
-    }
-
-    /* Content */
-    .content {
-      padding: 20px;
-      overflow-y: auto;
-    }
-
-    .card {
-      background: white;
-      padding: 15px;
-      border-radius: 10px;
-      margin-bottom: 15px;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-    }
-
-    .card h3 { margin-bottom: 10px; }
-  </style>
+    <title>Medical KBS Project</title>
+    <style>
+        body { font-family: sans-serif; background: #f0f2f5; display: flex; justify-content: center; padding: 50px; }
+        .container { background: white; padding: 30px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); width: 350px; text-align: center; }
+        select, button { width: 100%; padding: 10px; margin-top: 15px; border-radius: 5px; }
+        button { background: #007bff; color: white; border: none; cursor: pointer; font-weight: bold; }
+        #result { margin-top: 20px; padding: 10px; border: 1px solid #ddd; display: none; background: #e9ecef; text-align: left; }
+    </style>
 </head>
 <body>
-
-  <div class="sidebar">
-    <h2>Docs</h2>
-    <ul>
-      <li onclick="loadContent('intro')">Introduction</li>
-      <li onclick="loadContent('setup')">Setup</li>
-      <li onclick="loadContent('api')">API</li>
-    </ul>
-  </div>
-
-  <div class="main">
-    <div class="search-bar">
-      <input type="text" id="search" placeholder="Search..." onkeyup="searchContent()" />
-    </div>
-
-    <div class="content" id="content">
-      <div class="card">
-        <h3>Welcome</h3>
-        <p>Select a topic from the sidebar.</p>
-      </div>
-    </div>
-  </div>
-
-  <script>
-    const data = {
-      intro: "This is the introduction section of your knowledge base.",
-      setup: "Here you will find setup instructions.",
-      api: "API documentation goes here."
-    };
-
-    function loadContent(section) {
-      const content = document.getElementById('content');
-      content.innerHTML = `
-        <div class="card">
-          <h3>${section.toUpperCase()}</h3>
-          <p>${data[section]}</p>
+    <div class="container">
+        <h2>Medical Diagnosis KBS</h2>
+        <p>Select Symptom:</p>
+        <select id="userChoice">
+            <option value="">-- Select --</option>
+            <option value="diabetes">High Sugar / Thirst (Diabetes)</option>
+            <option value="fever">High Fever (Viral)</option>
+            <option value="flu">Cough & Cold (Flu)</option>
+        </select>
+        <button onclick="startKBS()">Check Diagnosis</button>
+        <div id="result">
+            <strong>Diagnosis:</strong> <span id="dis"></span><br>
+            <strong>Medicine:</strong> <span id="med"></span>
         </div>
-      `;
-    }
-
-    function searchContent() {
-      const query = document.getElementById('search').value.toLowerCase();
-      const content = document.getElementById('content');
-      let results = '';
-
-      for (let key in data) {
-        if (data[key].toLowerCase().includes(query)) {
-          results += `
-            <div class="card">
-              <h3>${key.toUpperCase()}</h3>
-              <p>${data[key]}</p>
-            </div>
-          `;
+    </div>
+    <script>
+        function startKBS() {
+            let choice = document.getElementById('userChoice').value;
+            let d = "", m = "";
+            if(choice === "diabetes") { d = "Type 2 Diabetes"; m = "Metformin"; }
+            else if(choice === "fever") { d = "Viral Fever"; m = "Panadol"; }
+            else if(choice === "flu") { d = "Common Flu"; m = "Arinac"; }
+            
+            if(choice) {
+                document.getElementById('dis').innerText = d;
+                document.getElementById('med').innerText = m;
+                document.getElementById('result').style.display = "block";
+            }
         }
-      }
-
-      content.innerHTML = results || '<div class="card"><p>No results found.</p></div>';
-    }
-  </script>
-
+    </script>
 </body>
 </html>
-
-<!--
-GIT & GITHUB SETUP INSTRUCTIONS:
-
-1. Initialize Git:
-   git init
-
-2. Add files:
-   git add .
-
-3. Commit:
-   git commit -m "Initial commit"
-
-4. Create a repo on GitHub
-
-5. Link repo:
-   git remote add origin https://github.com/your-username/your-repo.git
-
-6. Push:
-   git branch -M main
-   git push -u origin main
--->
