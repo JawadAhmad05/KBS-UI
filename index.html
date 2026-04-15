@@ -1,45 +1,19 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Medical KBS Project</title>
-    <style>
-        body { font-family: sans-serif; background: #f0f2f5; display: flex; justify-content: center; padding: 50px; }
-        .container { background: white; padding: 30px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); width: 350px; text-align: center; }
-        select, button { width: 100%; padding: 10px; margin-top: 15px; border-radius: 5px; }
-        button { background: #007bff; color: white; border: none; cursor: pointer; font-weight: bold; }
-        #result { margin-top: 20px; padding: 10px; border: 1px solid #ddd; display: none; background: #e9ecef; text-align: left; }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <h2>Medical Diagnosis KBS</h2>
-        <p>Select Symptom:</p>
-        <select id="userChoice">
-            <option value="">-- Select --</option>
-            <option value="diabetes">High Sugar / Thirst (Diabetes)</option>
-            <option value="fever">low Sugar (Viral)</option>
-            <option value="flu">Treatments (Flu)</option>
-        </select>
-        <button onclick="startKBS()">Check Diagnosis</button>
-        <div id="result">
-            <strong>Diagnosis:</strong> <span id="dis"></span><br>
-            <strong>Medicine:</strong> <span id="med"></span>
-        </div>
-    </div>
-    <script>
-        function startKBS() {
-            let choice = document.getElementById('userChoice').value;
-            let d = "", m = "";
-            if(choice === "diabetes") { d = "Type 2 Diabetes"; m = "Metformin"; }
-            else if(choice === "low Suger") { d = "Viral Fever"; m = "Panadol"; }
-            else if(choice === "Treatments") { d = "Common Flu"; m = "Arinac"; }
-            
-            if(choice) {
-                document.getElementById('dis').innerText = d;
-                document.getElementById('med').innerText = m;
-                document.getElementById('result').style.display = "block";
-            }
-        }
-    </script>
-</body>
-</html>
+def diabetes_kbs_diagnostic_system():
+    print("==============================================")
+    print("   KNOWLEDGE-BASED SYSTEM: DIABETES DIAGNOSIS  ")
+    print("==============================================")
+    
+    try:
+        # Inputs lenay ka process
+        fasting_glucose = float(input("Enter Fasting Glucose level (mg/dL): "))
+        hba1c = float(input("Enter HbA1c level (%): "))
+        symptoms = input("Are symptoms present? (Thirst, Frequent Urination, Fatigue) [y/n]: ").lower().strip()
+        
+        has_symptoms = True if symptoms == 'y' else False
+
+        # --- Diagnostic Knowledge Rules ---
+        
+        # Rule 1: Diabetes Diagnosis
+        if fasting_glucose >= 126 or hba1c >= 6.5:
+            result = "DIABETES MELLITUS"
+            status = "High risk detected. Clinical intervention and lifestyle changes are required."
